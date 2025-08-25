@@ -15,9 +15,31 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #0077BE 0%, #00A8CC 25%, #4DD0E1 50%, #80DEEA 75%, #B2EBF2 100%);
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="ocean" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%230077BE;stop-opacity:1" /><stop offset="25%" style="stop-color:%2300A8CC;stop-opacity:1" /><stop offset="50%" style="stop-color:%234DD0E1;stop-opacity:1" /><stop offset="75%" style="stop-color:%2380DEEA;stop-opacity:1" /><stop offset="100%" style="stop-color:%23B2EBF2;stop-opacity:1" /></linearGradient></defs><rect width="100%" height="100%" fill="url(%23ocean)"/><g opacity="0.3"><circle cx="100" cy="150" r="2" fill="white"/><circle cx="300" cy="80" r="1.5" fill="white"/><circle cx="500" cy="200" r="1" fill="white"/><circle cx="700" cy="120" r="2.5" fill="white"/><circle cx="900" cy="180" r="1.8" fill="white"/><circle cx="1100" cy="90" r="1.2" fill="white"/><circle cx="150" cy="400" r="1.5" fill="white"/><circle cx="350" cy="350" r="2" fill="white"/><circle cx="550" cy="450" r="1" fill="white"/><circle cx="750" cy="380" r="1.8" fill="white"/><circle cx="950" cy="420" r="1.3" fill="white"/><circle cx="1150" cy="360" r="2.2" fill="white"/><circle cx="200" cy="600" r="1.8" fill="white"/><circle cx="400" cy="650" r="1.2" fill="white"/><circle cx="600" cy="580" r="2.5" fill="white"/><circle cx="800" cy="620" r="1.5" fill="white"/><circle cx="1000" cy="590" r="1.9" fill="white"/><circle cx="1200" cy="640" r="1.1" fill="white"/></g></svg>'), linear-gradient(135deg, #0077BE 0%, #00A8CC 25%, #4DD0E1 50%, #80DEEA 75%, #B2EBF2 100%);
             background-attachment: fixed;
+            background-size: cover;
             color: #2C3E50;
+            position: relative;
+        }
+
+        /* 바다 파도 효과 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200"><path d="M0 100c50-25 100-15 150-20s100-10 150-5 100-15 150-10 100-5 150-10 100-15 150-5 100-10 150-15 100-5 150-10v100H0z" fill="rgba(255,255,255,0.1)"/><path d="M0 120c60-30 120-20 180-25s120-15 180-10 120-20 180-15 120-10 180-20 120-15 180-10 120-20 180-15 120-10 180-20v80H0z" fill="rgba(255,255,255,0.05)"/></svg>') repeat-x;
+            background-size: 1200px 200px;
+            animation: wave 15s infinite linear;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-1200px); }
         }
 
         .container {
@@ -27,7 +49,7 @@
         }
 
         .header {
-            background: linear-gradient(45deg, #1A73E8, #00BCD4, #4FC3F7);
+            background: linear-gradient(45deg, #006994, #0088CC, #00A8CC, #4DD0E1);
             color: white;
             text-align: center;
             padding: 40px 20px;
@@ -36,6 +58,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             position: relative;
             overflow: hidden;
+            border: 3px solid rgba(255,255,255,0.2);
         }
 
         .header::before {
@@ -45,9 +68,29 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0 10c10-5 20 0 30-3s20-8 30-5 20 5 30 2 10-5 20 0v10H0z" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0 10c10-5 20 0 30-3s20-8 30-5 20 5 30 2 10-5 20 0v10H0z" fill="rgba(255,255,255,0.15)"/></svg>') repeat;
             animation: wave 20s infinite linear;
             pointer-events: none;
+        }
+
+        /* 바다 거품 효과 추가 */
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.3)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.2)"/><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.4)"/><circle cx="90" cy="80" r="2.5" fill="rgba(255,255,255,0.25)"/></svg>') repeat;
+            animation: bubble 8s infinite linear;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        @keyframes bubble {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.1); }
+            100% { transform: translateY(0) scale(1); }
         }
 
         @keyframes wave {
@@ -98,14 +141,35 @@
         }
 
         .countdown {
-            background: linear-gradient(45deg, #FF8A65, #FF7043, #FF5722);
+            background: linear-gradient(45deg, #006994, #0088CC, #00A8CC, #4DD0E1);
             color: white;
             padding: 25px;
             border-radius: 20px;
             text-align: center;
             margin: 25px 0;
-            box-shadow: 0 8px 25px rgba(255, 87, 34, 0.3);
-            border: 3px solid rgba(255,255,255,0.2);
+            box-shadow: 0 8px 25px rgba(0, 105, 148, 0.3);
+            border: 3px solid rgba(255,255,255,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 카운트다운에 바다 파도 효과 */
+        .countdown::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0 15c20-10 40-5 60-8s40-3 60-2 40-8 60-5 40-2 60-5 40-8 60-3 40-2 60-8v5H0z" fill="rgba(255,255,255,0.1)"/></svg>') repeat-x;
+            background-size: 100px 20px;
+            animation: countdownWave 10s infinite linear;
+            pointer-events: none;
+        }
+
+        @keyframes countdownWave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100px); }
         }
 
         .countdown-timer {
@@ -115,13 +179,27 @@
         }
 
         .section {
-            background: rgba(255,255,255,0.98);
+            background: rgba(255,255,255,0.95);
             margin: 25px 0;
             padding: 35px;
             border-radius: 20px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            border: 2px solid rgba(0,188,212,0.1);
-            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0,188,212,0.2);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 섹션에 바다 테마 효과 추가 */
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #006994, #00A8CC, #4DD0E1, #80DEEA);
+            border-radius: 20px 20px 0 0;
         }
 
         .section h2 {
@@ -442,9 +520,67 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.7; }
         }
+
+        /* 바다 생물 장식 요소 */
+        .ocean-decoration {
+            position: fixed;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .fish {
+            font-size: 24px;
+            animation: swim 8s linear infinite;
+        }
+
+        .shell {
+            font-size: 20px;
+            animation: sink 10s ease-in-out infinite;
+        }
+
+        .seaweed {
+            font-size: 18px;
+            animation: sway 7s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes swim {
+            0% { transform: translateX(-100px) rotateY(0deg); }
+            50% { transform: translateX(50vw) rotateY(0deg); }
+            51% { transform: translateX(50vw) rotateY(180deg); }
+            100% { transform: translateX(100vw) rotateY(180deg); }
+        }
+
+        @keyframes sink {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
     </style>
 </head>
 <body>
+    <!-- 바다 생물 장식 요소들 -->
+    <div class="ocean-decoration fish" style="top: 10%; left: 5%;">🐠</div>
+    <div class="ocean-decoration fish" style="top: 20%; left: 15%;">🐟</div>
+    <div class="ocean-decoration fish" style="top: 35%; left: 8%;">🐡</div>
+    <div class="ocean-decoration shell" style="top: 60%; left: 10%;">🐚</div>
+    <div class="ocean-decoration shell" style="top: 75%; left: 20%;">🦀</div>
+    <div class="ocean-decoration seaweed" style="top: 80%; left: 5%;">🌿</div>
+    <div class="ocean-decoration seaweed" style="top: 85%; left: 25%;">🌿</div>
+    <div class="ocean-decoration fish" style="top: 45%; left: 85%;">🐠</div>
+    <div class="ocean-decoration fish" style="top: 65%; left: 90%;">🐟</div>
+    <div class="ocean-decoration shell" style="top: 25%; left: 80%;">🐚</div>
+
     <div class="container">
         <!-- 헤더 -->
         <div class="header">
@@ -1187,7 +1323,36 @@
             
             // 페이지 로드시 환영 효과
             setTimeout(createEmojiRain, 1000);
+            
+            // 바다 생물들 동적 생성
+            createOceanLife();
         });
+
+        // 바다 생물 생성 함수
+        function createOceanLife() {
+            const oceanCreatures = ['🐠', '🐟', '🐡', '🐚', '🦀', '🌿', '🦐', '🐙'];
+            const container = document.body;
+            
+            setInterval(() => {
+                if (Math.random() < 0.3) { // 30% 확률로 생성
+                    const creature = document.createElement('div');
+                    creature.className = 'ocean-decoration fish';
+                    creature.textContent = oceanCreatures[Math.floor(Math.random() * oceanCreatures.length)];
+                    creature.style.top = Math.random() * 80 + 10 + '%';
+                    creature.style.left = Math.random() * 80 + 10 + '%';
+                    creature.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                    
+                    container.appendChild(creature);
+                    
+                    // 10초 후 제거
+                    setTimeout(() => {
+                        if (creature.parentNode) {
+                            creature.remove();
+                        }
+                    }, 10000);
+                }
+            }, 3000);
+        }
 
         // 재미있는 인터랙션 추가
         document.querySelectorAll('.schedule-table tr').forEach(row => {
