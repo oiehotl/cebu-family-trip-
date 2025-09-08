@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏔️ 웰리힐리 리조트 여행 | 4가족의 힐링 타임</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="mountain" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%234CAF50;stop-opacity:1" /><stop offset="25%" style="stop-color:%238BC34A;stop-opacity:1" /><stop offset="50%" style="stop-color:%23CDDC39;stop-opacity:1" /><stop offset="75%" style="stop-color:%23FFEB3B;stop-opacity:1" /><stop offset="100%" style="stop-color:%23FFC107;stop-opacity:1" /></linearGradient></defs><rect width="100%" height="100%" fill="url(%23mountain)"/><g opacity="0.3"><polygon points="0,400 200,200 400,300 600,150 800,250 1000,180 1200,300 1200,800 0,800" fill="rgba(76,175,80,0.2)"/><polygon points="0,500 150,350 350,450 550,300 750,400 950,320 1200,420 1200,800 0,800" fill="rgba(139,195,74,0.15)"/></g></svg>'), linear-gradient(135deg, #4CAF50 0%, #8BC34A 25%, #CDDC39 50%, #FFEB3B 75%, #FFC107 100%);
+            background-attachment: fixed;
+            background-size: cover;
+            color: #2C3E50;
+            position: relative;
+        }
+
+        /* 산 바람 효과 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200"><path d="M0 100c20-10 40-5 60-8s40-3 60-2 40-8 60-5 40-2 60-5 40-8 60-3 40-2 60-8v100H0z" fill="rgba(255,255,255,0.1)"/><path d="M0 120c30-15 60-10 90-12s60-5 90-3 60-10 90-8 60-3 90-5 60-10 90-8 60-3 90-10v80H0z" fill="rgba(255,255,255,0.05)"/></svg>') repeat-x;
+            background-size: 1200px 200px;
+            animation: wind 20s infinite linear;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes wind {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-1200px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 드롭다운 네비게이션 */
+        .nav-dropdown {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(76,175,80,0.3);
+        }
+
+        .nav-dropdown select {
+            background: linear-gradient(45deg, #4CAF50, #8BC34A, #CDDC39);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            min-width: 200px;
+        }
+
+        .nav-dropdown select option {
+            background: white;
+            color: #2C3E50;
+            padding: 10px;
+        }
+
+        .nav-dropdown select:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .header {
+            background: linear-gradient(45deg, #4CAF50, #8BC34A, #CDDC39, #FFEB3B);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid rgba(255,255,255,0.2);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0 10c10-5 20 0 30-3s20-8 30-5 20 5 30 2 10-5 20 0v10H0z" fill="rgba(255,255,255,0.15)"/></svg>') repeat;
+            animation: wind 25s infinite linear;
+            pointer-events: none;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .trip-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-card {
+            background: rgba(255,255,255,0.95);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+            color: #2C3E50;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border-color: #4CAF50;
+        }
+
+        .info-card i {
+            font-size: 2em;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .section {
+            background: rgba(255,255,255,0.95);
+            margin: 25px 0;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 2px solid rgba(76,175,80,0.2);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A, #CDDC39, #FFEB3B);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .section h2 {
+            color: #2E7D32;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .schedule-table th,
+        .schedule-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .schedule-table th {
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .schedule-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .schedule-table tr:hover {
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+
+        .day-header {
+            background: linear-gradient(45deg, #4CAF50, #8BC34A) !important;
+            color: white;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .cost-table th,
+        .cost-table td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cost-table th {
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            color: white;
+            text-align: left;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .cost-table .total {
+            background: linear-gradient(45deg, #FFC107, #FFD54F);
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #2E7D32;
+        }
+
+        .role-card {
+            background: rgba(255,255,255,0.9);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #4CAF50;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 15px 0;
+            color: #2C3E50;
+        }
+
+        .role-card h4 {
+            color: #2E7D32;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .role-card ul {
+            margin-left: 20px;
+        }
+
+        .role-card li {
+            margin: 8px 0;
+            padding: 5px 0;
+        }
+
+        .map-container {
+            background: rgba(255,255,255,0.9);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .fun-fact {
+            background: linear-gradient(45deg, #FF8A65, #FFAB91, #FFCC02);
+            color: #2E7D32;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 138, 101, 0.3);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #4CAF50, #8BC34A, #CDDC39);
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 12px;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        }
+
+        .mountain-decoration {
+            position: fixed;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.6;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .tree {
+            font-size: 24px;
+            animation: sway 6s ease-in-out infinite;
+        }
+
+        .cloud {
+            font-size: 20px;
+            animation: drift 10s linear infinite;
+        }
+
+        .bird {
+            font-size: 18px;
+            animation: fly 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+
+        @keyframes drift {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(100vw); }
+        }
+
+        @keyframes fly {
+            0%, 100% { transform: translateX(0px) translateY(0px); }
+            25% { transform: translateX(10px) translateY(-5px); }
+            50% { transform: translateX(20px) translateY(0px); }
+            75% { transform: translateX(10px) translateY(5px); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .schedule-table, .cost-table {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 산 장식 요소들 -->
+    <div class="mountain-decoration tree" style="top: 10%; left: 5%;">🌲</div>
+    <div class="mountain-decoration tree" style="top: 20%; left: 15%;">🌳</div>
+    <div class="mountain-decoration cloud" style="top: 15%; left: 8%;">☁️</div>
+    <div class="mountain-decoration bird" style="top: 25%; left: 10%;">🦅</div>
+    <div class="mountain-decoration tree" style="top: 60%; left: 20%;">🌲</div>
+    <div class="mountain-decoration cloud" style="top: 75%; left: 5%;">☁️</div>
+    <div class="mountain-decoration tree" style="top: 45%; left: 85%;">🌳</div>
+    <div class="mountain-decoration bird" style="top: 65%; left: 90%;">🦅</div>
+    <div class="mountain-decoration cloud" style="top: 25%; left: 80%;">☁️</div>
+
+    <!-- 드롭다운 네비게이션 -->
+    <div class="nav-dropdown">
+        <select id="tripSelector" onchange="navigateToTrip()">
+            <option value="wellihilli" selected>🏔️ 웰리힐리 여행 (2025.09.27)</option>
+            <option value="cebu">🏝️ 세부 가족여행 (2025.11.22)</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <!-- 헤더 -->
+        <div class="header">
+            <h1>🏔️ 웰리힐리 리조트 여행</h1>
+            <div class="subtitle">4가족의 힐링 타임 - "산에서 쉬어가요!"</div>
+            
+            <div class="trip-info">
+                <div class="info-card">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>여행 기간</h3>
+                    <p>9월 27일(토) ~ 9월 28일(일)<br>1박 2일</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-users"></i>
+                    <h3>참가자</h3>
+                    <p>4가족<br>(이태운, 이재영, 낙훈, 대영)</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-bed"></i>
+                    <h3>숙소</h3>
+                    <p>횡성 웰리힐리 리조트<br>도착 순서대로 방 선택</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-won-sign"></i>
+                    <h3>예상 비용</h3>
+                    <p>1가족 약 36.5만원<br>(총 146만원 ÷ 4가족)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 일정표 -->
+        <div class="section">
+            <h2><i class="fas fa-map-marked-alt"></i> 웰리힐리 여행 일정</h2>
+            
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>날짜</th>
+                        <th>시간</th>
+                        <th>일정</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="day-header">
+                        <td colspan="3">Day 1 | 9월 27일 (토) – 웰리힐리 도착 & 힐링</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="6">9/27</td>
+                        <td>12:00</td>
+                        <td>점심 식사 (각자 또는 함께) 🍽️</td>
+                    </tr>
+                    <tr>
+                        <td>14:00</td>
+                        <td>웰리힐리 리조트 도착 🏨</td>
+                    </tr>
+                    <tr>
+                        <td>14:00-15:00</td>
+                        <td>체크인 & 방 배정 (도착 순서대로) 🗝️</td>
+                    </tr>
+                    <tr>
+                        <td>15:00-17:00</td>
+                        <td>보물찾기 & 레크레이션 🎯</td>
+                    </tr>
+                    <tr>
+                        <td>18:00-20:00</td>
+                        <td>바베큐 파티 & 저녁 식사 🍖</td>
+                    </tr>
+                    <tr>
+                        <td>20:00-</td>
+                        <td>자유시간 & 휴식 😴</td>
+                    </tr>
+
+                    <tr class="day-header">
+                        <td colspan="3">Day 2 | 9월 28일 (일) – 아침 & 체크아웃</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">9/28</td>
+                        <td>08:00-10:00</td>
+                        <td>조식 & 휴식 ☕</td>
+                    </tr>
+                    <tr>
+                        <td>10:00-12:00</td>
+                        <td>워터파크 & 루지 체험 🏊‍♀️🎢</td>
+                    </tr>
+                    <tr>
+                        <td>12:00</td>
+                        <td>체크아웃 & 귀가 🚗</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 역할 분담 -->
+        <div class="section">
+            <h2><i class="fas fa-users-cog"></i> 역할 분담</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 20px 0;">
+                <div class="role-card">
+                    <h4><i class="fas fa-shopping-cart"></i> 이태운</h4>
+                    <p><strong>담당:</strong> 마트 장보기</p>
+                    <div style="background: rgba(76,175,80,0.1); padding: 15px; border-radius: 10px; margin-top: 10px;">
+                        <p><strong>📝 구매 목록:</strong></p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 5px; margin-top: 10px; font-size: 0.9em;">
+                            <span>• 과자</span>
+                            <span>• 김</span>
+                            <span>• 일회용품</span>
+                            <span>• 대하</span>
+                            <span>• 고기</span>
+                            <span>• 술류</span>
+                            <span>• 조개탕재료</span>
+                            <span>• 폭죽</span>
+                            <span>• 쌈장</span>
+                            <span>• 생수</span>
+                            <span>• 장작</span>
+                            <span>• 음료수</span>
+                            <span>• 햇반</span>
+                            <span>• 라면</span>
+                            <span>• 과일</span>
+                            <span>• 물티슈</span>
+                            <span>• 마른 안주</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <h4><i class="fas fa-gift"></i> 이재영</h4>
+                    <p><strong>담당:</strong> 보물찾기 & 놀거리 준비</p>
+                    <div style="background: rgba(76,175,80,0.1); padding: 15px; border-radius: 10px; margin-top: 10px;">
+                        <p>• 보물찾기 상품 준비</p>
+                        <p>• 기타 놀거리 준비</p>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <h4><i class="fas fa-tint"></i> 낙훈</h4>
+                    <p><strong>담당:</strong> 생수 & 장작 & 놀거리</p>
+                    <div style="background: rgba(76,175,80,0.1); padding: 15px; border-radius: 10px; margin-top: 10px;">
+                        <p>• 생수 준비</p>
+                        <p>• 장작 준비</p>
+                        <p>• 놀거리 준비</p>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <h4><i class="fas fa-gamepad"></i> 대영</h4>
+                    <p><strong>담당:</strong> 레크레이션 진행</p>
+                    <div style="background: rgba(76,175,80,0.1); padding: 15px; border-radius: 10px; margin-top: 10px;">
+                        <p>• 보물찾기 진행</p>
+                        <p>• 출발 드림팀 등 레크레이션 진행</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 예상 비용 -->
+        <div class="section">
+            <h2><i class="fas fa-calculator"></i> 예상 비용 (4가족 분담)</h2>
+            
+            <table class="cost-table">
+                <thead>
+                    <tr>
+                        <th>항목</th>
+                        <th>총 비용</th>
+                        <th>1가족 분담</th>
+                        <th>상태</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>숙소비 (웰리힐리 리조트)</td>
+                        <td>100만원</td>
+                        <td>25만원</td>
+                        <td>✅ 결제완료</td>
+                    </tr>
+                    <tr>
+                        <td>자재비</td>
+                        <td>10만원</td>
+                        <td>2.5만원</td>
+                        <td>💰 현금</td>
+                    </tr>
+                    <tr>
+                        <td>마트 장보기</td>
+                        <td>30만원</td>
+                        <td>7.5만원</td>
+                        <td>🛒 현금</td>
+                    </tr>
+                    <tr>
+                        <td>바베큐 비</td>
+                        <td>6만원</td>
+                        <td>1.5만원</td>
+                        <td>🍖 현금</td>
+                    </tr>
+                    <tr class="total">
+                        <td><strong>총계</strong></td>
+                        <td><strong>146만원</strong></td>
+                        <td><strong>36.5만원</strong></td>
+                        <td>🎯</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="fun-fact">
+                💡 <strong>비용 안내:</strong> 숙소비는 이미 결제 완료! 나머지 46만원만 현금으로 준비하세요! (1가족당 11.5만원) 👌
+            </div>
+        </div>
+
+        <!-- 숙소 위치 -->
+        <div class="section">
+            <h2><i class="fas fa-map-marker-alt"></i> 웰리힐리 리조트 위치</h2>
+            
+            <div class="map-container">
+                <h3>📍 횡성 웰리힐리 리조트</h3>
+                <p>강원도 횡성군 우천면 웰리힐리로 424</p>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.123456789!2d128.123456!3d37.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDA3JzI0LjQiTiAxMjjCsDA3JzI0LjQiRQ!5e0!3m2!1sko!2skr!4v1234567890123!5m2!1sko!2skr" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+
+        <!-- 웰리힐리 놀거리 -->
+        <div class="section">
+            <h2><i class="fas fa-swimming-pool"></i> 웰리힐리 놀거리</h2>
+            
+            <div class="role-card">
+                <h4><i class="fas fa-water"></i> 워터파크</h4>
+                <p>실내 워터파크에서 물놀이를 즐기세요! 아이들과 함께 안전하게 즐길 수 있습니다.</p>
+            </div>
+
+            <div class="role-card">
+                <h4><i class="fas fa-mountain"></i> 루지</h4>
+                <p>산악 루지를 타고 자연을 감상하며 스릴을 느껴보세요!</p>
+            </div>
+
+            <div class="role-card">
+                <h4><i class="fas fa-child"></i> 놀이기구</h4>
+                <p>다양한 놀이기구와 체험시설을 이용할 수 있습니다.</p>
+            </div>
+        </div>
+
+        <!-- 특이사항 -->
+        <div class="section">
+            <h2><i class="fas fa-exclamation-triangle"></i> 특이사항</h2>
+            
+            <div class="fun-fact">
+                🏨 <strong>방 선택:</strong> 도착하는 순서대로 방을 결정할 권리를 부여합니다! 먼저 도착하면 좋은 방 선택 가능! 🏃‍♂️
+            </div>
+            
+            <div class="fun-fact">
+                🍖 <strong>바베큐:</strong> 리조트에서 바베큐를 즐기며 가족들과 즐거운 시간을 보내세요!
+            </div>
+            
+            <div class="fun-fact">
+                🎯 <strong>레크레이션:</strong> 보물찾기와 출발 드림팀 등 다양한 놀이로 즐거운 시간을 만들어보세요!
+            </div>
+        </div>
+
+        <!-- 하단 버튼들 -->
+        <div style="text-align: center; margin: 40px 0;">
+            <button class="btn" onclick="printPage()">
+                <i class="fas fa-print"></i> 일정표 인쇄하기
+            </button>
+            <button class="btn" onclick="shareTrip()">
+                <i class="fas fa-share"></i> 친구들에게 공유하기
+            </button>
+            <button class="btn" onclick="createMountainEffect()">
+                <i class="fas fa-mountain"></i> 산 힐링 기대감 표출하기!
+            </button>
+        </div>
+
+        <!-- 푸터 -->
+        <div style="text-align: center; padding: 30px; color: white; background: rgba(0,0,0,0.1); border-radius: 15px; margin-top: 40px;">
+            <p>🏔️ <strong>웰리힐리 리조트 여행</strong> - 4가족의 힐링 타임</p>
+            <p>Made with ❤️ and lots of ☕ | 문의사항은 단체 카톡방에서!</p>
+            <p><small>* 이 일정표는 실제 상황에 따라 변경될 수 있습니다. 특히 날씨에 따라... 🌤️</small></p>
+        </div>
+    </div>
+
+    <script>
+        // 여행 페이지 네비게이션
+        function navigateToTrip() {
+            const selector = document.getElementById('tripSelector');
+            const selectedTrip = selector.value;
+            
+            if (selectedTrip === 'wellihilli') {
+                window.location.href = 'wellihilli_trip.html';
+            } else if (selectedTrip === 'cebu') {
+                window.location.href = 'cebu_family_trip.html';
+            }
+        }
+
+        // 페이지 인쇄
+        function printPage() {
+            window.print();
+        }
+
+        // 공유 기능
+        function shareTrip() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '웰리힐리 리조트 여행 - 4가족의 힐링 타임',
+                    text: '우리 웰리힐리 여행 일정표 확인해보세요!',
+                    url: window.location.href
+                });
+            } else {
+                // 클립보드에 복사
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('링크가 클립보드에 복사되었습니다!');
+                });
+            }
+        }
+
+        // 산 효과 생성
+        function createMountainEffect() {
+            const effects = ['🌲', '🌳', '☁️', '🦅', '⛰️', '🌿', '🍃', '🌾'];
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const effect = document.createElement('div');
+                    effect.textContent = effects[Math.floor(Math.random() * effects.length)];
+                    effect.className = 'mountain-decoration tree';
+                    effect.style.left = Math.random() * 100 + 'vw';
+                    effect.style.top = Math.random() * 100 + 'vh';
+                    effect.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    effect.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                    
+                    document.body.appendChild(effect);
+                    
+                    setTimeout(() => {
+                        effect.remove();
+                    }, 5000);
+                }, i * 100);
+            }
+        }
+
+        // 이벤트 리스너 등록
+        document.addEventListener('DOMContentLoaded', function() {
+            // 페이지 로드시 산 효과
+            setTimeout(createMountainEffect, 1000);
+            
+            // 산 생물들 동적 생성
+            createMountainLife();
+        });
+
+        // 산 생물 생성 함수
+        function createMountainLife() {
+            const mountainCreatures = ['🌲', '🌳', '☁️', '🦅', '⛰️', '🌿', '🍃', '🌾'];
+            const container = document.body;
+            
+            setInterval(() => {
+                if (Math.random() < 0.2) { // 20% 확률로 생성
+                    const creature = document.createElement('div');
+                    creature.className = 'mountain-decoration tree';
+                    creature.textContent = mountainCreatures[Math.floor(Math.random() * mountainCreatures.length)];
+                    creature.style.top = Math.random() * 80 + 10 + '%';
+                    creature.style.left = Math.random() * 80 + 10 + '%';
+                    creature.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                    
+                    container.appendChild(creature);
+                    
+                    // 10초 후 제거
+                    setTimeout(() => {
+                        if (creature.parentNode) {
+                            creature.remove();
+                        }
+                    }, 10000);
+                }
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
