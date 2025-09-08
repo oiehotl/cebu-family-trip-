@@ -48,6 +48,44 @@
             padding: 20px;
         }
 
+        /* 드롭다운 네비게이션 */
+        .nav-dropdown {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0,188,212,0.3);
+        }
+
+        .nav-dropdown select {
+            background: linear-gradient(45deg, #1A73E8, #00BCD4, #4DD0E1);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            min-width: 200px;
+        }
+
+        .nav-dropdown select option {
+            background: white;
+            color: #2C3E50;
+            padding: 10px;
+        }
+
+        .nav-dropdown select:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
+        }
+
         .header {
             background: linear-gradient(45deg, #006994, #0088CC, #00A8CC, #4DD0E1);
             color: white;
@@ -581,6 +619,14 @@
     <div class="ocean-decoration fish" style="top: 65%; left: 90%;">🐟</div>
     <div class="ocean-decoration shell" style="top: 25%; left: 80%;">🐚</div>
 
+    <!-- 드롭다운 네비게이션 -->
+    <div class="nav-dropdown">
+        <select id="tripSelector" onchange="navigateToTrip()">
+            <option value="cebu">🏝️ 세부 가족여행 (2025.11.22)</option>
+            <option value="wellihilli">🏔️ 웰리힐리 여행 (2025.09.27)</option>
+        </select>
+    </div>
+
     <div class="container">
         <!-- 헤더 -->
         <div class="header">
@@ -1086,15 +1132,19 @@
                     <h4><i class="fas fa-utensils"></i> 기타 음식</h4>
                     <div class="packing-item">
                         <input type="checkbox" id="other-food1"> 
-                        <label for="other-food1">조선 치킨</label>
+                        <label for="other-food1"><a href="https://blog.naver.com/ehddnrjt/223980718064" target="_blank">라부요 맛집</a></label>
                     </div>
                     <div class="packing-item">
                         <input type="checkbox" id="other-food2"> 
-                        <label for="other-food2">고동리 족발</label>
+                        <label for="other-food2">조선 치킨</label>
                     </div>
                     <div class="packing-item">
                         <input type="checkbox" id="other-food3"> 
-                        <label for="other-food3">라면 준비</label>
+                        <label for="other-food3">고동리 족발</label>
+                    </div>
+                    <div class="packing-item">
+                        <input type="checkbox" id="other-food4"> 
+                        <label for="other-food4">라면 준비</label>
                     </div>
                 </div>
             </div>
@@ -1282,6 +1332,18 @@
                 navigator.clipboard.writeText(window.location.href).then(() => {
                     alert('링크가 클립보드에 복사되었습니다!');
                 });
+            }
+        }
+
+        // 여행 페이지 네비게이션
+        function navigateToTrip() {
+            const selector = document.getElementById('tripSelector');
+            const selectedTrip = selector.value;
+            
+            if (selectedTrip === 'wellihilli') {
+                window.location.href = 'wellihilli_trip.html';
+            } else if (selectedTrip === 'cebu') {
+                window.location.href = 'cebu_family_trip.html';
             }
         }
 
